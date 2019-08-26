@@ -1,3 +1,6 @@
+# https://www.geeksforgeeks.org/largest-sum-contiguous-subarray/
+# https://www.geeksforgeeks.org/maximum-sum-subsequence-least-k-distant-elements/
+
 import random
 
 class MaximumSum:

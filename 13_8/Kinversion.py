@@ -42,6 +42,9 @@ class KInversion:
                     ind = self.findDiffAtLeastK(p + 1, mid, self.__arr[q])
                     if ind != -1:
                         count += mid - ind + 1
+                        p = ind
+                    else:
+                        p = mid + 1
                 temp.append(self.__arr[q])
                 q += 1
             else:
