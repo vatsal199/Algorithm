@@ -1,3 +1,7 @@
+'''
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+'''
 import random
 import time
 

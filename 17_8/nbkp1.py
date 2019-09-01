@@ -1,3 +1,7 @@
+'''
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+'''
 class Kstacks:
     # for given K it will crate K Stacks indexed 0,1,...,K-1
     def __init__(self,K):

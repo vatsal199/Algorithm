@@ -1,3 +1,7 @@
+'''
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+'''
 # https://practice.geeksforgeeks.org/problems/inversion-of-array/0/
 # Find inversion
 # Here we use merge sort algorithm to find inversion

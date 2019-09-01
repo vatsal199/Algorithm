@@ -1,3 +1,7 @@
+'''
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+'''
 class KInversion:
     def __init__(self,arr,K):
         self.__arr = arr

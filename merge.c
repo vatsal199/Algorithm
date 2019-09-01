@@ -1,3 +1,7 @@
+/*
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+*/
 #include<stdio.h>
 int len;
 void print(int arr[],int len){

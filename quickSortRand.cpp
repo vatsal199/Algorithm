@@ -1,3 +1,7 @@
+/*
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+*/
 #include<stdio.h>
 #include<iostream>
 #include<cstdlib>
