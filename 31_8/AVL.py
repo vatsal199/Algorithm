@@ -260,7 +260,7 @@ class AVL:
         else:
             return 0
 
-    def correctbalanceFactor(self,insertedNode):
+    def correctBalanceFactor(self,insertedNode):
         tempParent = insertedNode.parent
         gParent = tempParent.parent
 
@@ -309,7 +309,7 @@ class AVL:
 
     def insertNode(self,value):
         insertedNode = self.insert(value)
-        self.root = self.correctbalanceFactor(insertedNode)
+        self.root = self.correctBalanceFactor(insertedNode)
 
 
 a1 = AVL(10)
