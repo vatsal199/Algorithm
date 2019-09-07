@@ -84,18 +84,28 @@ class BST:
                     deleteParent.left = None
 
             elif deleteNode.left is None:
+                if deleteNode == self.root:
+                    self.root = deleteNode.right
+                    return
                 deleteParent = deleteNode.parent
                 if deleteParent.key < deleteNode.key:
                     deleteParent.right = deleteNode.right
+                    deleteNode.right.parent = deleteParent
                 else:
                     deleteParent.left = deleteNode.right
+                    deleteNode.left.parent = deleteParent
 
             elif deleteNode.right is None:
+                if deleteNode == self.root:
+                    self.root = deleteNode.left
+                    return
                 deleteParent = deleteNode.parent
                 if deleteParent.key < deleteNode.key:
                     deleteParent.right = deleteNode.left
+                    deleteNode.left.parent = deleteParent
                 else:
                     deleteParent.left = deleteNode.left
+                    deleteNode.right.parent = deleteParent
 
             else:
                 deleteParent = deleteNode.parent
@@ -108,16 +118,24 @@ class BST:
                 successorParent = successor.parent
                 if flag:
                     successorParent.left = successor.right
+                    if successor.right is not None:
+                        successor.right.parent = successorParent
 
                 successor.left = deleteNode.left
+                if deleteNode.left is not None:
+                    deleteNode.left.parent = successor
                 if flag:
                     successor.right = deleteNode.right
+                    if successor.right is not None:
+                        successor.right.parent = successor
+
 
                 if deleteParent.key < deleteNode.key:
                     deleteParent.right = successor
                 else:
                     deleteParent.left = successor
 
+                successor.parent = deleteParent
 
     def inorder(self):
         print("Inorder:",end=" ")
