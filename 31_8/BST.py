@@ -77,6 +77,9 @@ class BST:
 
         if deleteNode is not None:
             if deleteNode.left is None and deleteNode.right is None:
+                if deleteNode == self.root:
+                    self.root = None
+                    return
                 deleteParent = deleteNode.parent
                 if deleteParent.key < deleteNode.key:
                     deleteParent.right = None
@@ -122,8 +125,7 @@ class BST:
                         successor.right.parent = successorParent
 
                 successor.left = deleteNode.left
-                if deleteNode.left is not None:
-                    deleteNode.left.parent = successor
+                deleteNode.left.parent = successor
                 if flag:
                     successor.right = deleteNode.right
                     if successor.right is not None:
@@ -136,6 +138,8 @@ class BST:
                     deleteParent.left = successor
 
                 successor.parent = deleteParent
+                if deleteNode == self.root:
+                    self.root = successor
 
     def inorder(self):
         print("Inorder:",end=" ")
