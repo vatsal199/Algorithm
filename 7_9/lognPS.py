@@ -36,7 +36,7 @@ class Node:
         self.parent = None
         self.right = None
         self.left = None
-        self.noOfNodes = 1
+        self.prefixSum = value
 
 class BST:
 
@@ -47,8 +47,8 @@ class BST:
         tempNode = Node(value)
         parent  = self.root
         while parent is not None:
-            parent.noOfNodes += 1
             if parent.key < value:
+                tempNode.prefixSum = parent.prefixSum + value
                 if parent.right is None:
                     tempNode.parent = parent
                     parent.right = tempNode
@@ -56,6 +56,9 @@ class BST:
                 else:
                     parent = parent.right
             else:
+                parent.prefixSum = parent.prefixSum + value
+                if parent.right is not None:
+                    self.inorderUpdate(parent.right,value)
                 if parent.left is None:
                     tempNode.parent = parent
                     parent.left = tempNode
@@ -74,23 +77,6 @@ class BST:
                 parent = parent.left
         return None
 
-    def bottomUpUpdate(self,X):
-        while X is not None:
-            X.noOfNodes -= 1
-            X = X.parent
-
-    def updatenoOfNodes(self,X):
-        temp = 1
-        if X.right is None and X.left is None:
-            return temp
-        elif X.right is None:
-            temp = X.left.noOfNodes + 1
-        elif X.left is None:
-            temp = X.right.noOfNodes + 1
-        else:
-            temp = X.left.noOfNodes + X.right.noOfNodes + 1
-        return temp
-
     def delete(self,value):
         deleteNode = self.search(value)
 
@@ -104,7 +90,6 @@ class BST:
                     deleteParent.right = None
                 else:
                     deleteParent.left = None
-                self.bottomUpUpdate(deleteParent)
 
             elif deleteNode.left is None:
                 if deleteNode == self.root:
@@ -117,7 +102,6 @@ class BST:
                 else:
                     deleteParent.left = deleteNode.right
                     deleteNode.left.parent = deleteParent
-                self.bottomUpUpdate(deleteParent)
 
             elif deleteNode.right is None:
                 if deleteNode == self.root:
@@ -130,7 +114,6 @@ class BST:
                 else:
                     deleteParent.left = deleteNode.left
                     deleteNode.right.parent = deleteParent
-                self.bottomUpUpdate(deleteParent)
 
             else:
                 deleteParent = deleteNode.parent
@@ -148,11 +131,11 @@ class BST:
 
                 successor.left = deleteNode.left
                 deleteNode.left.parent = successor
-
                 if flag:
                     successor.right = deleteNode.right
                     if successor.right is not None:
                         successor.right.parent = successor
+
 
                 if deleteParent.key < deleteNode.key:
                     deleteParent.right = successor
@@ -162,9 +145,6 @@ class BST:
                 successor.parent = deleteParent
                 if deleteNode == self.root:
                     self.root = successor
-                successor.noOfNodes = self.updatenoOfNodes(successor)
-                self.bottomUpUpdate(successorParent)
-
 
     def inorder(self):
         print("Inorder:",end=" ")
@@ -179,73 +159,35 @@ class BST:
                     s1.push(stackEntry[0].left,True)
             else:
                 print(stackEntry[0].key,end=" ")
+                print("s:",stackEntry[0].prefixSum,end=" ")
                 if stackEntry[0].right is not None:
                     s1.push(stackEntry[0].right, True)
 
         print()
 
-    def rank(self,key):
-        tempRoot = self.root
-        rank = 1
-        flag = True
-        while tempRoot is not None:
-            if tempRoot.key == key:
-                flag = False
-                if tempRoot.right is not None:
-                    rank += tempRoot.right.noOfNodes
-                tempRoot = None
-            elif tempRoot.key < key:
-                tempRoot = tempRoot.right
+    def inorderUpdate(self,X,value):
+        s1 = stack()
+        s1.push(X,True)
+
+        while not s1.isEmpty():
+            stackEntry = s1.pop()
+            if stackEntry[1]:
+                s1.push(stackEntry[0], False)
+                if stackEntry[0].left is not None:
+                    s1.push(stackEntry[0].left,True)
             else:
-                if tempRoot.right is not None:
-                    rank += tempRoot.right.noOfNodes + 1
-                else:
-                    rank += 1
-                tempRoot = tempRoot.left
+                X.prefixSum += value
+                if stackEntry[0].right is not None:
+                    s1.push(stackEntry[0].right, True)
 
-        if flag:
-            return -1
-        else:
-            return rank
 
-    def findRank(self,rank):
-        ele = -1
-        tempRoot = self.root
-        while tempRoot is not None and rank != 0:
-            if tempRoot.right is not None:
-                if rank == tempRoot.right.noOfNodes + 1:
-                    ele = tempRoot.key
-                    tempRoot = None
-                elif tempRoot.right.noOfNodes + 1 < rank:
-                    rank -= tempRoot.right.noOfNodes + 1
-                    tempRoot = tempRoot.left
-                else:
-                    tempRoot = tempRoot.right
-            else:
-                if rank == 1:
-                    ele = tempRoot.key
-                    tempRoot = None
-                elif 1 < rank:
-                    rank -=  1
-                    tempRoot = tempRoot.left
-                else:
-                    tempRoot = tempRoot.right
-        return ele
-
-class Rank:
+class PrefixSum:
     def __init__(self,arr):
         self.__b1 = BST(arr[0])
         for i in range(1,len(arr)):
             self.__b1.insert(arr[i])
         self.__b1.inorder()
 
-    def rank(self,key):
-        return self.__b1.rank(key)
-
-    def findRank(self,rank):
-        return self.__b1.findRank(rank)
 
 arr = [25,13,12,16,14,15,75,50,98,60]
-f1 = Rank(arr)
-print(f1.rank(15))
-print(f1.findRank(1))
+p1 = PrefixSum(arr)
