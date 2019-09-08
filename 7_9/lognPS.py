@@ -66,88 +66,8 @@ class BST:
                 else:
                     parent = parent.left
 
-    def search(self,value):
-        parent = self.root
-        while parent is not None:
-            if parent.key == value:
-                return parent
-            elif parent.key < value:
-                parent = parent.right
-            else:
-                parent = parent.left
-        return None
-
-    def delete(self,value):
-        deleteNode = self.search(value)
-
-        if deleteNode is not None:
-            if deleteNode.left is None and deleteNode.right is None:
-                if deleteNode == self.root:
-                    self.root = None
-                    return
-                deleteParent = deleteNode.parent
-                if deleteParent.key < deleteNode.key:
-                    deleteParent.right = None
-                else:
-                    deleteParent.left = None
-
-            elif deleteNode.left is None:
-                if deleteNode == self.root:
-                    self.root = deleteNode.right
-                    return
-                deleteParent = deleteNode.parent
-                if deleteParent.key < deleteNode.key:
-                    deleteParent.right = deleteNode.right
-                    deleteNode.right.parent = deleteParent
-                else:
-                    deleteParent.left = deleteNode.right
-                    deleteNode.left.parent = deleteParent
-
-            elif deleteNode.right is None:
-                if deleteNode == self.root:
-                    self.root = deleteNode.left
-                    return
-                deleteParent = deleteNode.parent
-                if deleteParent.key < deleteNode.key:
-                    deleteParent.right = deleteNode.left
-                    deleteNode.left.parent = deleteParent
-                else:
-                    deleteParent.left = deleteNode.left
-                    deleteNode.right.parent = deleteParent
-
-            else:
-                deleteParent = deleteNode.parent
-                successor = deleteNode.right
-                flag = False
-                while successor.left is not None:
-                    flag = True
-                    successor = successor.left
-
-                successorParent = successor.parent
-                if flag:
-                    successorParent.left = successor.right
-                    if successor.right is not None:
-                        successor.right.parent = successorParent
-
-                successor.left = deleteNode.left
-                deleteNode.left.parent = successor
-                if flag:
-                    successor.right = deleteNode.right
-                    if successor.right is not None:
-                        successor.right.parent = successor
-
-
-                if deleteParent.key < deleteNode.key:
-                    deleteParent.right = successor
-                else:
-                    deleteParent.left = successor
-
-                successor.parent = deleteParent
-                if deleteNode == self.root:
-                    self.root = successor
-
     def inorder(self):
-        print("Inorder:",end=" ")
+        print("Inorder Sum:",end=" ")
         s1 = stack()
         s1.push(self.root,True)
 
@@ -158,8 +78,9 @@ class BST:
                 if stackEntry[0].left is not None:
                     s1.push(stackEntry[0].left,True)
             else:
-                print(stackEntry[0].key,end=" ")
-                print("s:",stackEntry[0].prefixSum,end=" ")
+                '''print(stackEntry[0].key,end=" ")
+                print("s:",stackEntry[0].prefixSum,end=" ")'''
+                print(stackEntry[0].prefixSum, end=" ")
                 if stackEntry[0].right is not None:
                     s1.push(stackEntry[0].right, True)
 
