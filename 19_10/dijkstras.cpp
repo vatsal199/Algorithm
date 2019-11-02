@@ -1,4 +1,9 @@
 /*
+Author: Dhameliya Vatsalkumar
+Email: Dhameliya.Vatsalkumar@iiitb.org
+*/
+
+/*
 node of heap: (distance,vertex)
 node of graph: (vertex,weight)
 n = no of vertex
@@ -32,10 +37,13 @@ public:
     void bottomUpHeapify(int i){
         int parent = (i-1)/2;
         if(arr[parent].first > arr[i].first){
+			
             int parent_vertex = arr[parent].second;
             int ithnode_vertex = arr[i].second;
+			
             pos[parent_vertex] = i;
             pos[ithnode_vertex] = parent;
+			
             swap(arr[i],arr[parent]);
             bottomUpHeapify(parent);
         }
